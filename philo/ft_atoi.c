@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zkotbi <hibenouk@1337.ma>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 10:30:57 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/18 12:34:24 by zkotbi           ###   ########.fr       */
+/*   Created: 2024/04/18 10:49:46 by zkotbi            #+#    #+#             */
+/*   Updated: 2024/04/18 10:50:08 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+long	ft_atoi(const char *str)
 {
-	t_philo *philo;
+	long	result;
+	long	sign;
 
-	if (argc < 5 || argc > 6)
-		return (write(2, "invalid arguments\n", 18), 1);
-	if (is_valid_input(argv) == 0)
-		return (write(2, "invalid arguments\n", 18), 1);
-	philo = init_philo(argv);
-	if (philo == NULL)
-		return (printf("error_malloc"), 1);
-	if (dining_philo(philo) == 0)
-		return (printf("error\n"), 1);
-	return (0);
+	result = 0;
+	sign = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == 45)
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == 43)
+		str++;
+	while (*str >= 48 && *str <= 57)
+	{
+		result = result * 10 + (*str - 48);
+		if (result > 2147483649)
+			return (result);
+		str++;
+	}
+	result = result * sign;
+	return (result);
 }
