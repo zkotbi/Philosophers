@@ -3,62 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zkotbi <hibenouk@1337.ma>                  +#+  +:+       +#+        */
+/*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 23:34:54 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/20 06:53:22 by zkotbi           ###   ########.fr       */
+/*   Created: 2024/04/21 23:33:59 by zkotbi            #+#    #+#             */
+/*   Updated: 2024/04/24 00:06:32 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
-#include <sys/_types/_timeval.h>
-#include <sys/time.h>
-#include <time.h>
 
-void write_state(time_t	time, t_wr_flags state, int id)
+void	write_state(time_t	time, t_wr_flags state, t_philo *philo)
 {
+	if (philo->table->is_dinner_stop == 0 && state != WR_DIED)
+		return ;
+	pthread_mutex_lock(&(philo->table->write_mtx));
+	if (philo->table->is_dinner_stop == 0 && state != WR_DIED
+		&& !pthread_mutex_unlock(&philo->table->write_mtx))
+		return ;
 	if (state == TAKE_FORK)
-		printf("%ld %d has taken a fork\n", time, id);
+		printf("%ld %d has taken a fork\n", time, philo->id + 1);
 	if (state == WR_DIED)
-		printf("%ld %d died\n", time, id);
+		printf("%ld %d died\n", time, philo->id + 1);
 	if (state == EATING)
-		printf("%ld %d is eating\n", time, id);
+		printf("%ld %d is eating\n", time, philo->id + 1);
 	if (state == THINKING)
-		printf("%ld %d is thinking\n", time, id);
+		printf("%ld %d is thinking\n", time, philo->id + 1);
 	if (state == SLEEPING)
-		printf("%ld %d is sleeping\n", time, id);
+		printf("%ld %d is sleeping\n", time, philo->id + 1);
+	pthread_mutex_unlock(&(philo->table->write_mtx));
 }
 
-time_t get_time()
+static void	philo_activity(t_philo	*philo)
 {
-	struct timeval time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
-void eating(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->table->mtx[philo->l_fork]);
-	write_state(time_t time, t_wr_flags state, int id)	
-}
-
-void philo_activity(t_philo	*philo)
-{
-	philo->philo_start = get_time();
-	while (philo->state != FULL)
+	while (philo->table->is_dinner_stop == 1)
 	{
 		eating(philo);
 		sleeping(philo);
 		thinking(philo);
 	}
 }
-void *philo_routine(void *var)
+
+static void	one_philo_activity(t_philo *philo)
 {
-	t_philo *philo;
+	pthread_mutex_lock(&philo->table->forks[0]);
+	write_state((get_time() - philo->table->philo_start), TAKE_FORK, philo);
+	pthread_mutex_unlock(&philo->table->forks[0]);
+}
+
+void	*philo_routine(void *var)
+{
+	t_philo	*philo;
 
 	philo = (t_philo *)var;
-	philo_activity(philo);
+	if (philo->table->nb_forks == 1)
+		one_philo_activity(philo);
+	else
+		philo_activity(philo);
 	return (NULL);
 }

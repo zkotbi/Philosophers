@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zkotbi <hibenouk@1337.ma>                  +#+  +:+       +#+         #
+#    By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/04/15 20:17:26 by zkotbi            #+#    #+#              #
-#    Updated: 2024/04/18 12:35:12 by zkotbi           ###   ########.fr        #
+#    Created: 2024/04/24 00:04:29 by zkotbi            #+#    #+#              #
+#    Updated: 2024/04/24 00:07:51 by zkotbi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,11 @@ SRC 	= philo.c\
 		  input_error.c\
 		  ft_atoi.c\
 		  free.c\
-		  dining_philo.c
+		  dining_philo.c\
+		  routine.c\
+		  superviser.c\
+		  activity.c\
+		  time.c
 
 OBJ 	= $(SRC:.c=.o)
 
