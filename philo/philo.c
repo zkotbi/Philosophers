@@ -6,7 +6,7 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:03:17 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/24 01:19:34 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:49:00 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 {
 	t_philo	*philo;
 
-	atexit(f);
+	// atexit(f);
 	if (argc < 5 || argc > 6)
 		return (write(2, "invalid arguments\n", 18), 1);
 	if (is_valid_input(argv) == 0)

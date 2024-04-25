@@ -6,7 +6,7 @@
 #    By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 00:04:29 by zkotbi            #+#    #+#              #
-#    Updated: 2024/04/24 00:07:51 by zkotbi           ###   ########.fr        #
+#    Updated: 2024/04/25 01:11:08 by zkotbi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ NAME	= philo
 CC = cc
 
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror  -fsanitize=thread -g3
 
 all : $(NAME)
 

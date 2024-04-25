@@ -6,18 +6,19 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:28:27 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/23 23:54:18 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/25 01:56:14 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 time_t	get_thinking_time(t_table *table)
 {
 	if (table->time_to_sleep + table->time_to_sleep > table->time_to_die
 		|| (table->nb_forks % 2 == 0))
 		return (0);
-	return (2 * table->time_to_eat - table->time_to_sleep + 1);
+	return ((2 * table->time_to_eat - table->time_to_sleep) * 0.5);
 }
 
 time_t	get_time(void)
@@ -40,7 +41,7 @@ void	ft_sleep(t_philo *philo, time_t time)
 	start = get_time();
 	while (get_time() - start < time)
 	{
-		if (philo->table->is_dinner_stop == 0)
+		if (get_dinner_statue(philo) == 0)
 			break ;
 		usleep(50);
 	}

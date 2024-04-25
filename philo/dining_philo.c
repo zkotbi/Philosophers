@@ -6,11 +6,12 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:04:54 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/24 00:05:00 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/25 22:30:36 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 static int	start_thread(t_philo *philo)
 {
@@ -26,6 +27,7 @@ static int	start_thread(t_philo *philo)
 			return (thread_create_error(philo, i));
 		i++;
 	}
+	philo->table->is_all_ready = 1;
 	return (1);
 }
 
@@ -56,25 +58,29 @@ static int	init_mutexs(t_philo *philo)
 			return (mutex_destroy(philo, i));
 		if (pthread_mutex_init(&(philo[i].state_mtx), NULL) != 0)
 			return (mutex_destroy(philo, i));
+		if (pthread_mutex_init(&(philo[i].time_mtx), NULL) != 0)
+			return (mutex_destroy(philo, i));
 		i++;
 	}
 	if (pthread_mutex_init(&(philo->table->write_mtx), NULL) != 0)
+		return (mutex_destroy(philo, i));
+	if (pthread_mutex_init(&(philo->table->stop_mtx), NULL) != 0)
 		return (mutex_destroy(philo, i));
 	return (1);
 }
 
 int	dining_philo(t_philo *philo)
 {
-	pthread_t	hv_th;
+	pthread_t	sv_th;
 
 	if (init_mutexs(philo) == 0)
 		return (0);
 	if (start_thread(philo) == 0)
 		return (mutex_destroy(philo, philo->table->nb_forks));
-	if (pthread_create(&hv_th, NULL, &superviser, (void *)philo) != 0)
+	if (pthread_create(&sv_th, NULL, &superviser, (void *)philo) != 0)
 		return (thread_create_error(philo, philo->table->nb_forks),
 			mutex_destroy(philo, philo->table->nb_forks));
 	join_thread(philo);
-	pthread_join(hv_th, NULL);
+	pthread_join(sv_th, NULL);
 	return (1);
 }

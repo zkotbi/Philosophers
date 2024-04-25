@@ -6,7 +6,7 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:06:09 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/24 00:06:11 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/25 22:35:40 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct s_table
 	time_t			philo_start;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_mtx;
+	pthread_mutex_t	stop_mtx;
+	pthread_mutex_t start;
+
 }	t_table;
 
 typedef struct s_philo
@@ -58,34 +61,40 @@ typedef struct s_philo
 	int				id;
 	int				first_fork;
 	int				second_fork;
-	int				all_ready;
+	int				is_dinner_stop;
 	int				nb_time_eat;
 	t_table			*table;
 	t_state			state;
 	pthread_t		thread;
 	time_t			last_meal_time;
 	pthread_mutex_t	state_mtx;
+	pthread_mutex_t	stop_mtx;
+	pthread_mutex_t	time_mtx;
 }	t_philo;
 
-int			is_valid_input(char **argv);
-int			dining_philo(t_philo *philo);
-int			mutex_destroy(t_philo *philo, int size);
-int			thread_create_error(t_philo *philo, int size);
-long		ft_atoi(const char *str);
-void		*free_philo(t_philo *philo);
-void		*free_ptr(void	**ptr);
-void		*philo_routine(void *var);
-void		*superviser(void *var);
-void		write_state(time_t	time, t_wr_flags state, t_philo *philo);
-void		set_philo_state(t_philo *philo, t_state state);
-void		ft_sleep(t_philo *philo, time_t time);
-void		set_philo_state(t_philo *philo, t_state state);
-void		destroy_philos(t_philo	*philo);
-void		eating(t_philo *philo);
-void		sleeping(t_philo	*philo);
-void		thinking(t_philo	*philo);
-time_t		get_time(void);
-time_t		get_thinking_time(t_table *table);
-t_philo		*init_philo(char **argv);
+int				is_valid_input(char **argv);
+int				dining_philo(t_philo *philo);
+int				mutex_destroy(t_philo *philo, int size);
+int				thread_create_error(t_philo *philo, int size);
+int				get_dinner_statue(t_philo *philo);
+int				get_all_ready(t_philo	*philo);
+long			ft_atoi(const char *str);
+void			*free_philo(t_philo *philo);
+void			*free_ptr(void	**ptr);
+void			*philo_routine(void *var);
+void			*superviser(void *var);
+void			write_state(time_t	time, t_wr_flags state, t_philo *philo);
+void			set_philo_state(t_philo *philo, t_state state);
+void			ft_sleep(t_philo *philo, time_t time);
+void			set_philo_state(t_philo *philo, t_state state);
+void			destroy_philos(t_philo	*philo);
+void			eating(t_philo *philo);
+void			sleeping(t_philo	*philo);
+void			thinking(t_philo	*philo);
+time_t			get_last_meal_time(t_philo *philo);
+time_t			get_time(void);
+time_t			get_thinking_time(t_table *table);
+t_philo			*init_philo(char **argv);
+enum e_state	get_philo_state(t_philo	*philo);
 
 #endif

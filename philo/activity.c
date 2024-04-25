@@ -6,25 +6,27 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:26:05 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/23 23:49:19 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/25 22:33:33 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 void	eating(t_philo *philo)
 {
-	if (philo->table->is_dinner_stop == 0)
-		return ;
 	pthread_mutex_lock(&(philo->table->forks[philo->first_fork]));
+	if (philo->id % 2 == 0)
+		usleep(50);
 	write_state((get_time() - philo->table->philo_start), TAKE_FORK, philo);
-	if (philo->table->is_dinner_stop == 0
-		&& !pthread_mutex_unlock(&(philo->table->forks[philo->first_fork])))
-		return ;
 	pthread_mutex_lock(&(philo->table->forks[philo->second_fork]));
+	if (philo->id % 2 != 0)
+		usleep(50);
 	write_state((get_time() - philo->table->philo_start), TAKE_FORK, philo);
-	write_state(get_time() - philo->table->philo_start, EATING, philo);
+	pthread_mutex_lock(&philo->time_mtx);
 	philo->last_meal_time = get_time();
+	pthread_mutex_unlock(&philo->time_mtx);
+	write_state(get_time() - philo->table->philo_start, EATING, philo);
 	ft_sleep(philo, philo->table->time_to_eat);
 	philo->nb_time_eat++;
 	if (philo->nb_time_eat == philo->table->nb_time_must_eat)
