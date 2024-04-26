@@ -6,22 +6,16 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:03:17 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/26 08:44:20 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 09:06:18 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	f(void)
-{
-	system("leaks philo");
-}
-
 int	main(int argc, char **argv)
 {
 	t_philo	*philo;
 
-	atexit(f);
 	if (argc < 5 || argc > 6)
 		return (write(2, "invalid arguments\n", 18), 1);
 	if (is_valid_input(argv) == 0)
