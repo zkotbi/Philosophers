@@ -6,12 +6,11 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:04:54 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/25 22:30:36 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:41:18 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
 
 static int	start_thread(t_philo *philo)
 {
@@ -27,7 +26,6 @@ static int	start_thread(t_philo *philo)
 			return (thread_create_error(philo, i));
 		i++;
 	}
-	philo->table->is_all_ready = 1;
 	return (1);
 }
 

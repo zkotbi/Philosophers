@@ -6,7 +6,7 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:04:00 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/24 22:40:09 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:43:58 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static t_table	*init_table(char **argv)
 	table->time_to_sleep = ft_atoi(argv[4]);
 	table->nb_time_must_eat = -1;
 	table->is_dinner_stop = 1;
-	table->is_all_ready = 0;
 	if (argv[5] != NULL)
 		table->nb_time_must_eat = ft_atoi(argv[5]);
 	return (table);
@@ -61,7 +60,6 @@ t_philo	*init_philo(char **argv)
 		philo[i].id = i;
 		philo[i].nb_time_eat = 0;
 		philo[i].state = NORM;
-		philo[i].all_ready = 0;
 		assign_forks(&philo[i]);
 		i++;
 	}

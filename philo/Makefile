@@ -6,7 +6,7 @@
 #    By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 00:04:29 by zkotbi            #+#    #+#              #
-#    Updated: 2024/04/25 01:11:08 by zkotbi           ###   ########.fr        #
+#    Updated: 2024/04/26 08:40:29 by zkotbi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC 	= philo.c\
 		  routine.c\
 		  superviser.c\
 		  activity.c\
-		  time.c
+		  time.c\
+		  get_philo.c
 
 OBJ 	= $(SRC:.c=.o)
 
@@ -28,7 +29,7 @@ NAME	= philo
 CC = cc
 
 
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=thread -g3
+CFLAGS = -Wall -Wextra -Werror 
 
 all : $(NAME)
 

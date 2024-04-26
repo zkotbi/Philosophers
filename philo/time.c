@@ -6,7 +6,7 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:28:27 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/25 01:56:14 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:31:22 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ time_t	get_thinking_time(t_table *table)
 	if (table->time_to_sleep + table->time_to_sleep > table->time_to_die
 		|| (table->nb_forks % 2 == 0))
 		return (0);
-	return ((2 * table->time_to_eat - table->time_to_sleep) * 0.5);
+	return ((2 * table->time_to_eat - table->time_to_sleep) * 0.6);
 }
 
 time_t	get_time(void)

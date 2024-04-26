@@ -6,22 +6,17 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 23:26:05 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/25 22:33:33 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:38:00 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
 
 void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->table->forks[philo->first_fork]));
-	if (philo->id % 2 == 0)
-		usleep(50);
 	write_state((get_time() - philo->table->philo_start), TAKE_FORK, philo);
 	pthread_mutex_lock(&(philo->table->forks[philo->second_fork]));
-	if (philo->id % 2 != 0)
-		usleep(50);
 	write_state((get_time() - philo->table->philo_start), TAKE_FORK, philo);
 	pthread_mutex_lock(&philo->time_mtx);
 	philo->last_meal_time = get_time();

@@ -6,7 +6,7 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:06:09 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/25 22:35:40 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:40:11 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef enum e_state
 typedef struct s_table
 {
 	int				is_dinner_stop;
-	int				is_all_ready;
 	int				nb_forks;
 	int				nb_time_must_eat;
 	time_t			time_to_eat;
@@ -52,7 +51,6 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_mtx;
 	pthread_mutex_t	stop_mtx;
-	pthread_mutex_t start;
 
 }	t_table;
 
@@ -68,7 +66,6 @@ typedef struct s_philo
 	pthread_t		thread;
 	time_t			last_meal_time;
 	pthread_mutex_t	state_mtx;
-	pthread_mutex_t	stop_mtx;
 	pthread_mutex_t	time_mtx;
 }	t_philo;
 

@@ -6,11 +6,12 @@
 /*   By: zkotbi <zkotbi@1337.ma>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 00:04:18 by zkotbi            #+#    #+#             */
-/*   Updated: 2024/04/24 00:04:22 by zkotbi           ###   ########.fr       */
+/*   Updated: 2024/04/26 08:42:33 by zkotbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 void	*free_ptr(void	**ptr)
 {
@@ -49,6 +50,8 @@ int	mutex_destroy(t_philo *philo, int size)
 	{
 		pthread_mutex_destroy(&philo->table->forks[it]);
 		pthread_mutex_destroy(&philo[it].state_mtx);
+		pthread_mutex_destroy(&philo[it].time_mtx);
+		pthread_mutex_destroy(&philo[it].table->stop_mtx);
 		it++;
 	}
 	return (0);
